@@ -1,118 +1,584 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Happy Birthday Fizzaa 🎉</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Birthday Fizzaaa 🎉</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap">
+
   <style>
     body {
       margin: 0;
-      font-family: 'Comic Sans MS', cursive;
-      background: linear-gradient(to bottom right, #ffe4e1, #fffaf0);
-      color: #5c2a2a;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #fff5f5 0%, #fff0f5 50%, #fef5ff 100%);
+      color: #6b4c4c;
       text-align: center;
+      padding: 0;
       overflow-x: hidden;
+      min-height: 100vh;
     }
 
-    h1 {
-      font-size: 3em;
+    /* Header */
+    header {
+      font-size: 2.5rem;
+      font-weight: bold;
       margin-top: 40px;
-      color: #e75480;
+      color: #d15b78;
+      text-shadow: 1px 1px 3px rgba(255,255,255,0.8);
+      font-family: 'Dancing Script', cursive;
+      padding: 0 20px;
+      min-height: 60px;
+      letter-spacing: 1.5px;
     }
-
-    .apology {
-      font-size: 1.3em;
-      color: #b56576;
-      margin: 10px 0 20px;
+    .typing {
+      border-right: .15em solid #d15b78;
+      white-space: nowrap;
+      overflow: hidden;
+      display: inline-block;
+      min-width: 10px;
     }
-
-    .message {
-      background-color: #fff0f5;
-      border: 2px dashed #ffb6c1;
-      border-radius: 20px;
-      padding: 30px;
-      max-width: 700px;
-      margin: 30px auto;
-      color: #444;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    }
-
-    .quotes {
-      margin-top: 30px;
+    .nickname {
+      color: #e67e7e;
       font-style: italic;
-      color: #aa336a;
+      margin-top: 5px;
+      font-size: 1.5rem;
+      font-family: 'Dancing Script', cursive;
+      display: block;
     }
 
-    .gallery {
-      margin: 40px auto;
+    /* Slides */
+    .slides-container {
+      width: 100%;
+      min-height: 300px;
+      position: relative;
+      margin: 30px 0;
+      overflow: hidden;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+      opacity: 0;
+      transition: all 1s ease-in-out;
+      background-size: cover;
+      background-position: center;
+      background-blend-mode: overlay;
+      background-color: rgba(255,240,245,0.7);
+    }
+    .slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
+    .slide h2 {
+      font-size: 2rem;
+      color: #d15b78;
+      margin-bottom: 15px;
+      text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+    }
+    .slide p {
+      font-size: 1.2rem;
+      max-width: 80%;
+      color: #6b4c4c;
+    }
+
+    /* Balloons */
+    .balloon {
+      position: fixed;
+      bottom: -100px;
+      font-size: 2.2rem;
+      z-index: 100;
+      pointer-events: none;
+      animation: balloonUp 9s linear infinite;
+    }
+    @keyframes balloonUp {
+      from { transform: translateY(0); opacity: 0.8;}
+      10% { opacity: 1;}
+      to { transform: translateY(-110vh) scale(1.1); opacity: 0;}
+    }
+
+    /* Polaroid Photo Wall */
+    .photo-wall {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
+      gap: 18px;
+      margin: 30px 0 15px;
     }
-
-    .gallery img {
-      width: 150px;
-      height: 150px;
+    .polaroid {
+      width: 110px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 8px 18px rgba(160, 80, 110, 0.12);
+      margin: 5px;
+      padding: 8px 6px 16px;
+      text-align: center;
+      font-size: .89rem;
+      font-family: 'Dancing Script', cursive;
+      color: #d15b78;
+      transform: rotate(-2deg);
+      transition: transform .2s;
+    }
+    .polaroid img {
+      width: 90px;
+      height: 90px;
       object-fit: cover;
-      margin: 10px;
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-radius: 6px;
+      margin-bottom: 7px;
+    }
+    .polaroid:hover {
+      transform: scale(1.06) rotate(2deg);
+      box-shadow: 0 14px 34px rgba(160,80,110,0.23);
     }
 
-    .footer {
-      margin-top: 50px;
-      font-size: 1em;
-      color: #888;
+    /* Message */
+    .message-container {
+      perspective: 1000px;
+      margin: 40px auto;
+      max-width: 600px;
+    }
+    .message {
+      margin: 25px auto;
+      background: linear-gradient(145deg, #fff0f5 0%, #fff8f8 100%);
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(215, 180, 180, 0.3);
+      padding: 30px;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #4a2c2c;
+      transform-style: preserve-3d;
+      transition: all 0.5s ease;
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+    .message:hover {
+      transform: rotateY(5deg) rotateX(2deg);
+      box-shadow: 0 15px 30px rgba(215, 180, 180, 0.4);
     }
 
-    .stars {
+    /* Apology */
+    .apology {
+      font-size: 1.3rem;
+      margin: 30px auto;
+      color: #bb5c79;
+      font-weight: 600;
+      background: rgba(255,240,245,0.7);
+      padding: 15px 30px;
+      border-radius: 50px;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(215,180,180,0.2);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1);}
+      50% { transform: scale(1.05);}
+      100% { transform: scale(1);}
+    }
+
+    /* Quote */
+    .quote {
+      margin: 40px auto;
+      font-style: italic;
+      font-weight: 500;
+      color: #a85c67;
+      font-size: 1.2rem;
+      max-width: 600px;
+      padding: 20px;
+      border-left: 3px solid #e67e7e;
+      background: rgba(255,255,255,0.3);
+      border-radius: 0 10px 10px 0;
+    }
+
+    /* Footer */
+    footer {
+      margin: 50px 0 30px;
+      font-size: 1rem;
+      color: #9a6a72;
+      padding: 20px;
+      background: rgba(255,240,245,0.5);
+    }
+
+    /* Hearts */
+    .hearts {
       position: fixed;
-      top: 0;
-      left: 0;
+      top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none;
-      width: 100%;
-      height: 100%;
-      background: url('https://i.ibb.co/K7r9dXf/stars-overlay.png');
-      background-size: cover;
-      opacity: 0.2;
       z-index: -1;
+    }
+    .heart {
+      position: absolute;
+      opacity: 0;
+      font-size: 20px;
+      color: #ff6b8b;
+      animation: float 6s ease-in infinite;
+    }
+    @keyframes float {
+      0% {transform: translateY(0) rotate(0deg); opacity: 0;}
+      10% {opacity: 1;}
+      90% {opacity: 1;}
+      100% {transform: translateY(-500px) rotate(360deg); opacity: 0;}
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: #f00;
+      opacity: 0;
+      top: 0;
+      z-index: 999;
+      animation: confetti 5s ease-in-out infinite;
+    }
+    @keyframes confetti {
+      0% {transform: translateY(0) rotate(0deg); opacity: 1;}
+      100% {transform: translateY(100vh) rotate(720deg); opacity: 0;}
+    }
+    /* Birthday cake emoji */
+    .birthday-cake {
+      font-size: 3rem;
+      margin: 20px 0;
+      display: inline-block;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%,100% {transform: translateY(0);}
+      50% {transform: translateY(-20px);}
+    }
+
+    /* Music player */
+    #music-player {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      background: rgba(255,240,245,0.98);
+      border-radius: 30px;
+      box-shadow: 0 4px 18px rgba(215,180,180,0.08);
+      padding: 10px 22px;
+      z-index: 1999;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.1rem;
+      color: #d15b78;
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+    #music-player:hover { box-shadow: 0 8px 32px rgba(215,180,180,0.13);}
+    #music-player button {
+      background: none;
+      border: none;
+      color: inherit;
+      font-size: 1.5rem;
+      cursor: pointer;
+      outline: none;
+      margin-right: 6px;
+    }
+
+    /* Wish Modal */
+    .modal-bg {
+      position: fixed;
+      z-index: 2000;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(230,110,140,0.15);
+      display: flex; align-items: center; justify-content: center;
+      display: none;
+    }
+    .modal-bg.active { display: flex;}
+    .wish-modal {
+      background: #fff0f9;
+      padding: 29px 22px 17px 22px;
+      border-radius: 18px;
+      box-shadow: 0 12px 32px rgba(230,110,140,0.07);
+      min-width: 280px;
+      max-width: 95vw;
+      text-align: left;
+    }
+    .wish-modal label { font-weight: 600;}
+    .wish-modal textarea {
+      width: 100%; min-height: 60px; border-radius: 8px; border: 1px solid #e67e7e; padding: 8px; margin: 10px 0;
+      font-family: 'Poppins',sans-serif;
+    }
+    .wish-modal .modal-btns {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+    .wish-modal .modal-btns button {
+      background: #e67e7e;
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      padding: 6px 18px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+    .wish-modal .modal-btns button:hover { background: #d15b78; }
+    .wishes-wall {
+      margin: 20px auto 10px;
+      max-width: 520px;
+      padding: 0 12px;
+    }
+    .wish-entry {
+      background: #fff8fa;
+      border-left: 3px solid #e67e7e;
+      border-radius: 0 8px 8px 0;
+      margin: 8px 0;
+      padding: 10px;
+      color: #a85c67;
+      font-size: 1rem;
+      font-family: 'Dancing Script', cursive;
+      box-shadow: 0 2px 10px rgba(215,180,180,0.06);
+    }
+
+    /* Responsive */
+    @media (max-width: 650px) {
+      .photo-wall { gap: 8px;}
+      .polaroid { width: 90px; font-size: 0.8rem;}
+      .polaroid img { width: 70px; height: 70px;}
+      .slides-container { min-height: 210px;}
+      header { font-size: 2rem;}
+      .nickname { font-size: 1.1rem;}
+    }
+    @media (max-width: 450px) {
+      .message-container, .quote, .slides-container { padding-left: 0; padding-right: 0;}
+      .wish-modal { min-width: 99vw;}
     }
   </style>
 </head>
 <body>
+  <div class="hearts" id="hearts"></div>
+  <header class="animate__animated animate__fadeInDown">
+    <span class="typing" id="typing-text"></span>
+    <span class="nickname">BBG & Paglii 💖</span>
+  </header>
 
-  <div class="stars"></div>
+  <!-- Balloons -->
+  <div id="balloon-container"></div>
 
-  <h1>🎂 Happy Birthday Fizzaa (a.k.a bbg & paglii) 🎉</h1>
-  <div class="apology">Fizzaaa I am sorry for being late ✨️🤍</div>
+  <div class="apology animate__animated animate__fadeIn">Fizzaaa I am sorry for being late ✨️🤍</div>
 
-  <div class="message">
-    <p>
-      pagliiii 😝 happy birthday 🎂 🥳 🎉 sorry late hone k liye 😔✨️ <br><br>
-      Fizza you are the best person in my life 😭 ik not every one is perfect mostly ppls are imperfect but you are not from them 😝✨️🥹🤍 <br><br>
-      Fizza aaj bhi wo din yaad hai jis din mein aise hi us gc mein aya tha asal mein bore ho rha tha mein lkin mujhe kya pta tha mujhe itni achi friend mil jaye gi ✨️💅🏻 thanks Allah 💖 <br><br>
-      Fizza apki baatein, apke paragraphs, apki voice, ap ka mujhe pagluuu kehna... I just want k wqt ruk jai aur hum humesha sth rahein 🌸🥹🤍✨️💅🏻
-    </p>
+  <!-- Polaroid Photo Wall -->
+  <div class="photo-wall">
+    <div class="polaroid"><div>Fun Times!</div></div>
+    <div class="polaroid"><div>Besties Forever</div></div>
+    <div class="polaroid"><div>So Many Laughs</div></div>
+    <div class="polaroid"><div>Adventures</div></div>
   </div>
 
-  <div class="quotes">
-    “You make my world brighter just by being in it.” 🌟<br>
-    “The sky is beautiful, but your soul shines brighter.” ✨<br>
-    “Some people are like flowers — they make life bloom.” 🌸
+  <!-- Slides -->
+  <div class="slides-container">
+    <div class="slide active animate__animated animate__fadeIn">
+      <h2>To My Amazing Friend</h2>
+      <p>You make every day brighter just by being you ✨</p>
+    </div>
+    <div class="slide">
+      <h2>Special Memories</h2>
+      <p>Remembering all our fun times together 💖</p>
+    </div>
+    <div class="slide">
+      <h2>Wishing You Happiness</h2>
+      <p>May your year be filled with joy and laughter</p>
+    </div>
+    <div class="slide">
+      <h2>Forever Grateful</h2>
+      <p>For your kindness, love, and friendship</p>
+    </div>
   </div>
 
-  <h2 style="color:#e75480;">🌸 Your Aesthetic Gallery ☁️</h2>
-  <div class="gallery">
-    <img src="https://i.ibb.co/YTdNM89/sky1.jpg" alt="Sky 1">
-    <img src="https://i.ibb.co/NxnM7Kx/sky2.jpg" alt="Sky 2">
-    <img src="https://i.ibb.co/qWN7twG/flowers1.jpg" alt="Flowers 1">
-    <img src="https://i.ibb.co/z65vfjD/flowers2.jpg" alt="Flowers 2">
-    <img src="https://i.ibb.co/k3BYxGg/sky3.jpg" alt="Sky 3">
-    <img src="https://i.ibb.co/V9mhCZj/flowers3.jpg" alt="Flowers 3">
+  <!-- Main Message -->
+  <div class="message-container">
+    <div class="message animate__animated animate__fadeInUp">
+      pagliiii 😝 happy birthday 🎂 🥳 🎉 sorry late hone k liye 😔✨️ fizza you are the best person in my life 😭 ik not every one is perfect mostly ppls are imperfect but you are not from them😝✨️🥹🤍 fizza aaj bhi wo din yaad hai jis din mein aise hi us gc mein aya tha asal mein bore ho rha tha mein lkin mujhe kya pta tha mujhe itni achi friend mil jaye gi ✨️💅🏻 thanks Allah 💖  fizza apki baatein , apke paragraphs, apki voice ,ap ka mujhe pagluuu I just want k wqt ruk jai aur hum humesha sth rahein 🌸🥹🤍✨️💅🏻
+    </div>
   </div>
 
-  <div class="footer">
-    Made with 💖 for Fizza by your pagluu 🥹
+  <!-- Wishes Wall -->
+  <div class="wishes-wall" id="wishesWall"></div>
+  <button style="margin-bottom:30px;font-size:1rem;padding:8px 22px;border-radius:22px;background:#e67e7e;color:#fff;border:none;cursor:pointer;box-shadow:0 3px 15px rgba(230,110,140,0.10);" onclick="openWishModal()">Send a Wish ✍️</button>
+
+  <!-- Wish Modal -->
+  <div class="modal-bg" id="modalBg">
+    <div class="wish-modal">
+      <label for="wishInput">Write your wish for Fizzaaa:</label>
+      <textarea id="wishInput" maxlength="200" placeholder="Your sweet wish..."></textarea>
+      <div class="modal-btns">
+        <button onclick="saveWish()">Send</button>
+        <button onclick="closeWishModal()">Cancel</button>
+      </div>
+    </div>
   </div>
 
+  <div class="quote animate__animated animate__fadeIn">
+    "Friendship isn't a big thing — it's a million little things." <br />
+    — Unknown
+  </div>
+
+  <footer class="animate__animated animate__fadeIn">
+    Made with 💖 just for you, Fizza!
+  </footer>
+
+  <!-- Music Player -->
+  <div id="music-player">
+    <button id="music-toggle" title="Play/Pause">&#9654;</button>
+    <span id="music-status">Play Birthday Song</span>
+    <audio id="birthday-audio" loop>
+      <source src="https://cdn.pixabay.com/audio/2022/05/25/audio_124bfa1d5f.mp3" type="audio/mp3">
+    </audio>
+  </div>
+
+  <script>
+    // 1. Typing animation
+    const headerText = "Happy Birthday Fizzaaa! ";
+    let i = 0, typingSpeed = 85;
+    function typeWriter() {
+      const el = document.getElementById("typing-text");
+      if (i < headerText.length) {
+        el.textContent += headerText.charAt(i);
+        i++;
+        setTimeout(typeWriter, typingSpeed);
+      } else {
+        el.textContent = headerText;
+      }
+    }
+    document.addEventListener("DOMContentLoaded", typeWriter);
+
+    // 2. Create floating hearts
+    function createHearts() {
+      const heartsContainer = document.getElementById('hearts');
+      for (let i = 0; i < 30; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerHTML = '❤';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.top = Math.random() * 100 + 'vh';
+        heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+        heart.style.animationDuration = (Math.random() * 4 + 3) + 's';
+        heart.style.animationDelay = Math.random() * 5 + 's';
+        heartsContainer.appendChild(heart);
+      }
+    }
+
+    // 3. Create confetti
+    function createConfetti() {
+      const colors = ['#ff6b8b', '#ffb8b8', '#ff8e8e', '#ffd3d3', '#ff9e9e'];
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.width = (Math.random() * 10 + 5) + 'px';
+        confetti.style.height = (Math.random() * 10 + 5) + 'px';
+        confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        confetti.style.animationDelay = Math.random() * 5 + 's';
+        document.body.appendChild(confetti);
+      }
+    }
+
+    // 4. Balloons
+    function createBalloons() {
+      const balloonColors = ['#ffb3da', '#ffe066', '#8ecae6', '#a3d9a5', '#f4a259', '#ffb8b8'];
+      const emojis = ['🎈','🎉','🎊','💗'];
+      const container = document.getElementById('balloon-container');
+      for (let i = 0; i < 16; i++) {
+        const balloon = document.createElement('div');
+        balloon.classList.add('balloon');
+        const color = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+        balloon.style.color = color;
+        balloon.style.left = (Math.random() * 95) + 'vw';
+        balloon.style.fontSize = (Math.random() * 28 + 28) + 'px';
+        balloon.style.animationDelay = (Math.random() * 5) + 's';
+        balloon.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        container.appendChild(balloon);
+      }
+    }
+
+    // 5. Slides
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    function showSlide(n) {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (n + slides.length) % slides.length;
+      slides[currentSlide].classList.add('active');
+      slides[currentSlide].classList.add('animate__fadeIn');
+      setTimeout(() => {
+        slides[currentSlide].classList.remove('animate__fadeIn');
+      }, 1000);
+    }
+    function nextSlide() { showSlide(currentSlide + 1); }
+
+    // 6. Cake/emoji animation
+    const cakeEmojis = ['🎂', '🎉', '🎁', '🎈', '✨', '🥳'];
+    document.addEventListener('DOMContentLoaded', () => {
+      createHearts();
+      createConfetti();
+      createBalloons();
+
+      // Start slide show
+      setInterval(nextSlide, 3000);
+
+      // Load wishes
+      renderWishes();
+    });
+
+    // 7. Music player
+    const audio = document.getElementById('birthday-audio');
+    const musicBtn = document.getElementById('music-toggle');
+    const musicStatus = document.getElementById('music-status');
+    let playing = false;
+    musicBtn.onclick = () => {
+      if (!playing) {
+        audio.play();
+        musicBtn.innerHTML = "&#10073;&#10073;"; // pause icon
+        musicStatus.textContent = "Pause Birthday Song";
+        playing = true;
+      } else {
+        audio.pause();
+        musicBtn.innerHTML = "&#9654;"; // play icon
+        musicStatus.textContent = "Play Birthday Song";
+        playing = false;
+      }
+    };
+    audio.onended = () => { playing = false; musicBtn.innerHTML = "&#9654;"; musicStatus.textContent = "Play Birthday Song"; };
+
+    // 8. Wishes Modal
+    function openWishModal() {
+      document.getElementById('modalBg').classList.add('active');
+      document.getElementById('wishInput').value = '';
+    }
+    function closeWishModal() {
+      document.getElementById('modalBg').classList.remove('active');
+    }
+    function saveWish() {
+      const wish = document.getElementById('wishInput').value.trim();
+      if (!wish) return alert("Please write something!");
+      let wishes = JSON.parse(localStorage.getItem('fizzaWishes') || '[]');
+      wishes.push(wish);
+      localStorage.setItem('fizzaWishes', JSON.stringify(wishes));
+      closeWishModal();
+      renderWishes();
+    }
+    function renderWishes() {
+      const wishesWall = document.getElementById('wishesWall');
+      wishesWall.innerHTML = '';
+      let wishes = JSON.parse(localStorage.getItem('fizzaWishes') || '[]');
+      wishes.slice(-5).forEach(w =>
+        wishesWall.innerHTML += `<div class="wish-entry">${w}</div>`
+      );
+    }
+    window.openWishModal = openWishModal;
+    window.closeWishModal = closeWishModal;
+    window.saveWish = saveWish;
+  </script>
 </body>
 </html>
