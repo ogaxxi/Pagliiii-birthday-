@@ -2,187 +2,160 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Pookie Drama 💗</title>
+  <title>Pookie Calculator</title>
   <style>
     body {
-      margin: 0;
-      font-family: 'Comic Sans MS', cursive;
-      background-color: #ffe6f0;
-      overflow-x: hidden;
-      transition: background 1s ease;
-    }
-
-    .container {
-      text-align: center;
-      padding: 50px;
-    }
-
-    .message {
-      font-size: 24px;
-      margin-bottom: 30px;
-      transition: opacity 0.5s ease;
-    }
-
-    .options {
+      background: linear-gradient(135deg, #ffe8f6 0%, #fffbe9 100%);
       display: flex;
       justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 15px 30px;
-      font-size: 18px;
-      background-color: #ff99cc;
-      border: none;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: transform 0.2s, background 0.3s;
-    }
-
-    .btn:hover {
-      background-color: #ff66b3;
-      transform: scale(1.1);
-    }
-
-    .floating-text {
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      width: 100%;
-      height: 100%;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
       overflow: hidden;
-      z-index: 0;
     }
-
-    .floating-text span {
-      position: absolute;
-      color: #ffcce0;
-      font-size: 20px;
-      animation: float 10s linear infinite;
-      opacity: 0.5;
+    .calculator {
+      background: #fffbe9;
+      padding: 30px 22px;
+      border-radius: 22px;
+      box-shadow: 0 8px 28px rgba(233,30,99,0.13);
+      min-width: 270px;
+      border: 2px solid #f8bbd0;
+      position: relative;
+      z-index: 2;
     }
-
-    @keyframes float {
-      0% {
-        transform: translateY(100vh) translateX(0);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-10vh) translateX(50px);
-        opacity: 0;
-      }
+    .title {
+      text-align: center;
+      color: #e91e63;
+      font-family: 'Dancing Script', cursive;
+      font-size: 2rem;
+      margin-bottom: 17px;
+      letter-spacing: 1.5px;
     }
-
-    .emoji-rain {
-      position: fixed;
-      top: 0;
+    input[type="text"] {
       width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 10;
+      padding: 14px;
+      font-size: 1.3rem;
+      border-radius: 8px;
+      border: 1.5px solid #e91e63;
+      margin-bottom: 18px;
+      background: #ffe8f6;
+      color: #c2185b;
+      text-align: right;
+      box-sizing: border-box;
     }
-
-    .emoji {
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    button {
+      padding: 16px 0;
+      font-size: 1.15rem;
+      background: #f8bbd0;
+      border: none;
+      border-radius: 10px;
+      color: #e91e63;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(233,30,99,0.11);
+    }
+    button:hover {
+      background: #e91e63;
+      color: #fff;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 15px;
+      color: #c2185b;
+      font-size: 1rem;
+      font-style: italic;
+      letter-spacing: 1px;
+    }
+    /* Floating 🧸 */
+    .floating-teddy {
       position: absolute;
-      animation: fall 3s linear infinite;
-      font-size: 32px;
+      left: 0;
+      top: 0;
+      pointer-events: none;
+      font-size: 2.3rem;
+      opacity: 0.85;
+      animation: teddyfloat 7s linear infinite;
+      z-index: 1;
     }
-
-    @keyframes fall {
+    @keyframes teddyfloat {
       0% {
-        top: -10%;
+        transform: translateY(100vh) scale(0.7) rotate(-15deg);
+        opacity: 0.6;
+      }
+      15% {
+        opacity: 1;
+      }
+      90% {
         opacity: 1;
       }
       100% {
-        top: 100%;
-        opacity: 0;
+        transform: translateY(-10vh) scale(1.1) rotate(15deg);
+        opacity: 0.5;
       }
     }
   </style>
 </head>
 <body>
-  <div class="floating-text" id="floatingText">
-    <!-- BBG letters will go here -->
-  </div>
-
-  <div class="emoji-rain" id="emojiRain"></div>
-
-  <div class="container" id="app">
-    <div class="message" id="message">Tum raat ko kidhr thi pagliii 😤</div>
-    <div class="options" id="options">
-      <button class="btn" onclick="handleResponse('sogi')">Sogi thi</button>
-      <button class="btn" onclick="handleResponse('dost')">Dost k DM mein thi</button>
+  <div class="calculator">
+    <div class="title">Pookie Calculator 🧮✨</div>
+    <input type="text" id="display" readonly>
+    <div class="buttons">
+      <button onclick="press('7')">7</button>
+      <button onclick="press('8')">8</button>
+      <button onclick="press('9')">9</button>
+      <button onclick="press('/')">÷</button>
+      <button onclick="press('4')">4</button>
+      <button onclick="press('5')">5</button>
+      <button onclick="press('6')">6</button>
+      <button onclick="press('*')">×</button>
+      <button onclick="press('1')">1</button>
+      <button onclick="press('2')">2</button>
+      <button onclick="press('3')">3</button>
+      <button onclick="press('-')">−</button>
+      <button onclick="press('0')">0</button>
+      <button onclick="press('.')">.</button>
+      <button onclick="clearDisplay()">C</button>
+      <button onclick="press('+')">+</button>
+      <button onclick="calculate()" style="grid-column: span 4; background:#e91e63;color:#fff;">=</button>
     </div>
+    <div class="footer">Made for Pookie by OGAXXI 💖</div>
   </div>
-
+  <!-- Floating 🧸 -->
   <script>
-    const message = document.getElementById('message');
-    const options = document.getElementById('options');
-    const emojiRain = document.getElementById('emojiRain');
-    const floatingText = document.getElementById('floatingText');
-
-    function handleResponse(choice) {
-      options.innerHTML = '';
-      if (choice === 'sogi') {
-        message.textContent = 'Sone se phle btaya kyun nhi?';
-        options.innerHTML = `
-          <button class="btn" onclick="handleSogiReply('sorry')">Sorry</button>
-          <button class="btn" onclick="handleSogiReply('ainda')">Ainda baad nhi hoga</button>
-        `;
-      } else if (choice === 'dost') {
-        message.textContent = 'Kyun? Mein bura houn kya?';
-        options.innerHTML = `
-          <button class="btn" onclick="handleDostReply('yes')">Yes</button>
-          <button class="btn" onclick="handleDostReply('no')">No</button>
-        `;
+    let display = document.getElementById('display');
+    function press(val) {
+      display.value += val;
+    }
+    function clearDisplay() {
+      display.value = '';
+    }
+    function calculate() {
+      try {
+        display.value = eval(display.value.replace(/÷/g, '/').replace(/×/g, '*').replace(/−/g, '-'));
+      } catch {
+        display.value = 'Error';
       }
     }
-
-    function handleSogiReply(reply) {
-      if (reply === 'sorry') {
-        message.textContent = "It's okay pookie✨️💗";
-      } else {
-        message.textContent = 'Acha but dhyan rkhna ab se wrna nrz ho joun ga😾💔';
-      }
-      options.innerHTML = '';
-    }
-
-    function handleDostReply(reply) {
-      if (reply === 'no') {
-        message.textContent = 'Awhhhhhh thanks pagliii 💗';
-      } else {
-        message.textContent = '😭😭💔💔🥺🥺';
-        document.body.style.background = 'linear-gradient(to bottom, #000000, #333)';
-        startEmojiRain();
-        showFloatingBBG();
-      }
-      options.innerHTML = '';
-    }
-
-    function startEmojiRain() {
-      for (let i = 0; i < 50; i++) {
-        let emoji = document.createElement('div');
-        emoji.classList.add('emoji');
-        emoji.style.left = `${Math.random() * 100}%`;
-        emoji.style.animationDuration = `${2 + Math.random() * 3}s`;
-        emoji.textContent = ['😭', '💔', '🥺'][Math.floor(Math.random() * 3)];
-        emojiRain.appendChild(emoji);
-        setTimeout(() => emoji.remove(), 5000);
+    // Floating 🧸 teddy bears
+    function createTeddy() {
+      for(let i=0; i<12; i++) {
+        let teddy = document.createElement('div');
+        teddy.className = 'floating-teddy';
+        teddy.innerText = '🧸';
+        teddy.style.left = Math.random()*98 + 'vw';
+        teddy.style.animationDuration = (Math.random()*3+5) + 's';
+        teddy.style.animationDelay = (Math.random()*5) + 's';
+        document.body.appendChild(teddy);
       }
     }
-
-    function showFloatingBBG() {
-      for (let i = 0; i < 40; i++) {
-        let span = document.createElement('span');
-        span.textContent = 'bbg';
-        span.style.left = `${Math.random() * 100}%`;
-        span.style.top = `${Math.random() * 100}%`;
-        span.style.fontSize = `${10 + Math.random() * 20}px`;
-        floatingText.appendChild(span);
-      }
-    }
+    window.onload = createTeddy;
   </script>
 </body>
 </html>
